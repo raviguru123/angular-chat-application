@@ -5,7 +5,7 @@ var _ = require('underscore');
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8888');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -36,7 +36,7 @@ io.on('connection', function(socket){
 	socket.on('chat message', function(msg){
 		console.log("message=:",msg);
 		io.emit("chat message",msg);
-		socket.broadcast.emit('chat message', msg);
+		//socket.broadcast.emit('chat message', msg);
 	});
 });
 http.listen(3000,function(){
