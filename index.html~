@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="test.module">
+<head>
+	<meta charset="utf-8" ng-app="test.module">
+	<title></title>
+
+	<script src="https://connect.soundcloud.com/sdk/sdk-3.1.1.js"></script>
+	<script>
+			SC.initialize({
+				client_id: '08ffe545ab9e0496a116d314ff0d9094',
+				redirect_uri: 'http://localhost:3000'
+			});
+			
+				SC.connect().then(function() {
+					console.log("then function execute");
+					return SC.get('/me');
+				}).then(function(me) {
+					alert('Hello, ' + me.username);
+				});
+				
+
+			
+
+				
+
+
+
+
+
+
+
+
+
+
+// update user's profile description
+
+
+</script>
+</head>
+<body style="padding-top: 100px"  onload="window.setTimeout(window.opener.SC.connectCallback, 1)">
+	<div>
+
+		<a target="_blank" href="https://instagram.com/oauth/authorize/?client_id=	f762d3e06bf947aca874d08417259d1c&redirect_uri=http://localhost:8887&response_type=token">Instagram login</a>
+		<input type="button" value="Instagram login" class="btn btn-primary btninsta"/>
+		<input type="button" value="SoundCloudLogin" class="btn btn-info btnlogin" name="">
+	</div>
+</body>
+</html>
+
