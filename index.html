@@ -30,32 +30,25 @@
 				socket.emit("send message",$messageBox.val());
 				$messageBox.val('');
 			});
-			socket.on("new message",function(msg){
-				$chat.append(msg+"<br/>");  
+			socket.on("new message",function(data){
+				$chat.append("<b>"+data.user+":</b>"+data.msg+"</br>");  
 			})
-
 			var $nickset=$("#nickwrap");
 			var $nickname=$("#setnickName");
 			$nickset.submit(function(e){
 				e.preventDefault();
-				debugger;
 				socket.emit("set user",$nickname.val(),function(data){
-
 					if(data)
 					{
 						$("#nickwrap").hide();
 						$("#contentwrap").show();
-						
 					}
 					else
 					{
 						$("#nickerror").html("sorry user name not available");
 					}
 				})
-
-
 			})
-
 			socket.on("usernames",function(data){
 				var html="";
 				for(var i=0;i<data.length;i++)
@@ -64,12 +57,7 @@
 				}
 				$("#users").html("");
 				$("#users").html(html);
-
 			})
-
-
-
-
 		})
 	</script>
 </head>

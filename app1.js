@@ -14,7 +14,7 @@ var users=[];
 io.sockets.on("connection",function(socket){
 	socket.on("send message",function(msg){
 		console.log("message=",msg);
-		io.sockets.emit("new message",msg);
+		io.sockets.emit("new message",{msg:msg,user:socket.user});
 	});
 	socket.on("set user",function(data,callback){
 		console.log("user=",data);
