@@ -6,9 +6,17 @@
 	<style>
 		#chat{
 			height:500px;
+			width:425;
 		}
 		#chat,#send-message{
 			margin-left: 100px;
+		}
+		#chatwrap{
+			float: left;
+			border: 1px #000 solid;
+		}
+		#contentwrap{
+			display: none;
 		}
 	</style>
 	<script>
@@ -23,16 +31,69 @@
 				$messageBox.val('');
 			});
 			socket.on("new message",function(msg){
-				$chat.append(msg+"<br/>");
+				$chat.append(msg+"<br/>");  
 			})
+
+			var $nickset=$("#nickwrap");
+			var $nickname=$("#setnickName");
+			$nickset.submit(function(e){
+				e.preventDefault();
+				debugger;
+				socket.emit("set user",$nickname.val(),function(data){
+
+					if(data)
+					{
+						$("#nickwrap").hide();
+						$("#contentwrap").show();
+						
+					}
+					else
+					{
+						$("#nickerror").html("sorry user name not available");
+					}
+				})
+
+
+			})
+
+			socket.on("usernames",function(data){
+				var html="";
+				for(var i=0;i<data.length;i++)
+				{
+					html+=data[i]+"</br>";
+				}
+				$("#users").html("");
+				$("#users").html(html);
+
+			})
+
+
+
+
 		})
 	</script>
 </head>
 <body>
-	<div id="chat"></div>
-	<form id="send-message" >
-		<input type="text" size="35" id="message" name="">
-		<input type="submit" value="submit">
-	</form>
+
+	<div id="nickwrap">
+		Enter UserName:
+		<p id="nickerror"></p>
+		<form id="nickset">
+			<input type="text" size="35" id="setnickName">
+			<input type="submit" value="submit" id="btnsetnickname"/>
+		</form>
+	</div>
+	<div id="contentwrap">
+		<div id="chatwrap">
+			<div id="chat">
+				<form id="send-message" style="bottom:0px;position:absolute; ">
+					<input type="text" size="35" id="message" name="">
+					<input type="submit" value="submit">
+				</form>
+			</div>
+			<div id="users"></div>
+		</div>
+	</div>
+
 </body>
 </html>
